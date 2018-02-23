@@ -2,7 +2,6 @@ from .parser import Parser
 from .ast_builder import AstBuilder
 from .token_matcher import MyTokenMatcher
 import codecs
-from json import dump
 
 
 # TODO: write comments, docstring, data table
