@@ -174,7 +174,7 @@ class MyTokenMatcher(TokenMatcher):
         _token = self.uncomment_token(token) if is_commented else token
         for keyword in (k for k in keywords if _token.line.startswith(k)):
             title = _token.line.get_rest_trimmed(len(keyword))
-            self._set_token_matched(_token, 'StepLine', title, self.comment_keyword(keyword, is_commented))
+            self._set_token_matched(token, 'StepLine', title, self.comment_keyword(keyword, is_commented))
             return True
 
         return False
