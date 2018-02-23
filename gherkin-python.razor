@@ -131,7 +131,7 @@ class @(Model.ParserClassName)(object):
 {<text>
     # @Raw(state.Comment)
     def match_token_at_@(state.Id)(self, token, context):
-        @foreach(var transition in state.Transitions)
+        @foreach(var transition in state.Transitions.OrderBy(t => t.TokenType.Name != "StepLine"))
         {
         @:if self.@MatchToken(transition.TokenType):
             if (transition.LookAheadHint != null)

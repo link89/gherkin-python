@@ -453,6 +453,10 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:1>Background:0>#BackgroundLine:0
     def match_token_at_6(self, token, context):
+        if self.match_StepLine(context, token):
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 9
         if self.match_EOF(context, token):
                 self.end_rule(context, 'Background')
                 self.end_rule(context, 'Feature')
@@ -464,10 +468,6 @@ class Parser(object):
         if self.match_Comment(context, token):
                 self.build(context, token)
                 return 8
-        if self.match_StepLine(context, token):
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 9
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'Background')
                 self.start_rule(context, 'Scenario_Definition')
@@ -502,6 +502,11 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:1>Background:1>Description_Helper:1>Description:0>#Other:0
     def match_token_at_7(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'Description')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 9
         if self.match_EOF(context, token):
                 self.end_rule(context, 'Description')
                 self.end_rule(context, 'Background')
@@ -512,11 +517,6 @@ class Parser(object):
                 self.end_rule(context, 'Description')
                 self.build(context, token)
                 return 8
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'Description')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 9
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'Description')
                 self.end_rule(context, 'Background')
@@ -553,6 +553,10 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:1>Background:1>Description_Helper:2>#Comment:0
     def match_token_at_8(self, token, context):
+        if self.match_StepLine(context, token):
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 9
         if self.match_EOF(context, token):
                 self.end_rule(context, 'Background')
                 self.end_rule(context, 'Feature')
@@ -561,10 +565,6 @@ class Parser(object):
         if self.match_Comment(context, token):
                 self.build(context, token)
                 return 8
-        if self.match_StepLine(context, token):
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 9
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'Background')
                 self.start_rule(context, 'Scenario_Definition')
@@ -598,6 +598,11 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:1>Background:2>Step:0>#StepLine:0
     def match_token_at_9(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'Step')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 9
         if self.match_EOF(context, token):
                 self.end_rule(context, 'Step')
                 self.end_rule(context, 'Background')
@@ -612,11 +617,6 @@ class Parser(object):
                 self.start_rule(context, 'DocString')
                 self.build(context, token)
                 return 32
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'Step')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 9
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'Step')
                 self.end_rule(context, 'Background')
@@ -656,6 +656,12 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:1>Background:2>Step:1>Step_Arg:0>__alt1:0>DataTable:0>#TableRow:0
     def match_token_at_10(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'DataTable')
+                self.end_rule(context, 'Step')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 9
         if self.match_EOF(context, token):
                 self.end_rule(context, 'DataTable')
                 self.end_rule(context, 'Step')
@@ -666,12 +672,6 @@ class Parser(object):
         if self.match_TableRow(context, token):
                 self.build(context, token)
                 return 10
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'DataTable')
-                self.end_rule(context, 'Step')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 9
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'DataTable')
                 self.end_rule(context, 'Step')
@@ -745,6 +745,10 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:0>Scenario:0>#ScenarioLine:0
     def match_token_at_12(self, token, context):
+        if self.match_StepLine(context, token):
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 15
         if self.match_EOF(context, token):
                 self.end_rule(context, 'Scenario')
                 self.end_rule(context, 'Scenario_Definition')
@@ -757,10 +761,6 @@ class Parser(object):
         if self.match_Comment(context, token):
                 self.build(context, token)
                 return 14
-        if self.match_StepLine(context, token):
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 15
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'Scenario')
                 self.end_rule(context, 'Scenario_Definition')
@@ -798,6 +798,11 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:0>Scenario:1>Description_Helper:1>Description:0>#Other:0
     def match_token_at_13(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'Description')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 15
         if self.match_EOF(context, token):
                 self.end_rule(context, 'Description')
                 self.end_rule(context, 'Scenario')
@@ -809,11 +814,6 @@ class Parser(object):
                 self.end_rule(context, 'Description')
                 self.build(context, token)
                 return 14
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'Description')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 15
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'Description')
                 self.end_rule(context, 'Scenario')
@@ -853,6 +853,10 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:0>Scenario:1>Description_Helper:2>#Comment:0
     def match_token_at_14(self, token, context):
+        if self.match_StepLine(context, token):
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 15
         if self.match_EOF(context, token):
                 self.end_rule(context, 'Scenario')
                 self.end_rule(context, 'Scenario_Definition')
@@ -862,10 +866,6 @@ class Parser(object):
         if self.match_Comment(context, token):
                 self.build(context, token)
                 return 14
-        if self.match_StepLine(context, token):
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 15
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'Scenario')
                 self.end_rule(context, 'Scenario_Definition')
@@ -902,6 +902,11 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:0>Scenario:2>Step:0>#StepLine:0
     def match_token_at_15(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'Step')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 15
         if self.match_EOF(context, token):
                 self.end_rule(context, 'Step')
                 self.end_rule(context, 'Scenario')
@@ -917,11 +922,6 @@ class Parser(object):
                 self.start_rule(context, 'DocString')
                 self.build(context, token)
                 return 30
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'Step')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 15
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'Step')
                 self.end_rule(context, 'Scenario')
@@ -964,6 +964,12 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:0>Scenario:2>Step:1>Step_Arg:0>__alt1:0>DataTable:0>#TableRow:0
     def match_token_at_16(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'DataTable')
+                self.end_rule(context, 'Step')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 15
         if self.match_EOF(context, token):
                 self.end_rule(context, 'DataTable')
                 self.end_rule(context, 'Step')
@@ -975,12 +981,6 @@ class Parser(object):
         if self.match_TableRow(context, token):
                 self.build(context, token)
                 return 16
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'DataTable')
-                self.end_rule(context, 'Step')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 15
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'DataTable')
                 self.end_rule(context, 'Step')
@@ -1026,6 +1026,10 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:1>ScenarioOutline:0>#ScenarioOutlineLine:0
     def match_token_at_17(self, token, context):
+        if self.match_StepLine(context, token):
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 20
         if self.match_EOF(context, token):
                 self.end_rule(context, 'ScenarioOutline')
                 self.end_rule(context, 'Scenario_Definition')
@@ -1038,10 +1042,6 @@ class Parser(object):
         if self.match_Comment(context, token):
                 self.build(context, token)
                 return 19
-        if self.match_StepLine(context, token):
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 20
         if self.match_TagLine(context, token):
             if self.lookahead_0(context, token):
                 self.start_rule(context, 'Examples_Definition')
@@ -1090,6 +1090,11 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:1>ScenarioOutline:1>Description_Helper:1>Description:0>#Other:0
     def match_token_at_18(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'Description')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 20
         if self.match_EOF(context, token):
                 self.end_rule(context, 'Description')
                 self.end_rule(context, 'ScenarioOutline')
@@ -1101,11 +1106,6 @@ class Parser(object):
                 self.end_rule(context, 'Description')
                 self.build(context, token)
                 return 19
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'Description')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 20
         if self.match_TagLine(context, token):
             if self.lookahead_0(context, token):
                 self.end_rule(context, 'Description')
@@ -1158,6 +1158,10 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:1>ScenarioOutline:1>Description_Helper:2>#Comment:0
     def match_token_at_19(self, token, context):
+        if self.match_StepLine(context, token):
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 20
         if self.match_EOF(context, token):
                 self.end_rule(context, 'ScenarioOutline')
                 self.end_rule(context, 'Scenario_Definition')
@@ -1167,10 +1171,6 @@ class Parser(object):
         if self.match_Comment(context, token):
                 self.build(context, token)
                 return 19
-        if self.match_StepLine(context, token):
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 20
         if self.match_TagLine(context, token):
             if self.lookahead_0(context, token):
                 self.start_rule(context, 'Examples_Definition')
@@ -1218,6 +1218,11 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:1>ScenarioOutline:2>Step:0>#StepLine:0
     def match_token_at_20(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'Step')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 20
         if self.match_EOF(context, token):
                 self.end_rule(context, 'Step')
                 self.end_rule(context, 'ScenarioOutline')
@@ -1233,11 +1238,6 @@ class Parser(object):
                 self.start_rule(context, 'DocString')
                 self.build(context, token)
                 return 28
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'Step')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 20
         if self.match_TagLine(context, token):
             if self.lookahead_0(context, token):
                 self.end_rule(context, 'Step')
@@ -1293,6 +1293,12 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:1>ScenarioOutline:2>Step:1>Step_Arg:0>__alt1:0>DataTable:0>#TableRow:0
     def match_token_at_21(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'DataTable')
+                self.end_rule(context, 'Step')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 20
         if self.match_EOF(context, token):
                 self.end_rule(context, 'DataTable')
                 self.end_rule(context, 'Step')
@@ -1304,12 +1310,6 @@ class Parser(object):
         if self.match_TableRow(context, token):
                 self.build(context, token)
                 return 21
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'DataTable')
-                self.end_rule(context, 'Step')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 20
         if self.match_TagLine(context, token):
             if self.lookahead_0(context, token):
                 self.end_rule(context, 'DataTable')
@@ -1719,6 +1719,12 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:1>ScenarioOutline:2>Step:1>Step_Arg:0>__alt1:1>DocString:2>#DocStringSeparator:0
     def match_token_at_29(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'DocString')
+                self.end_rule(context, 'Step')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 20
         if self.match_EOF(context, token):
                 self.end_rule(context, 'DocString')
                 self.end_rule(context, 'Step')
@@ -1727,12 +1733,6 @@ class Parser(object):
                 self.end_rule(context, 'Feature')
                 self.build(context, token)
                 return 27
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'DocString')
-                self.end_rule(context, 'Step')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 20
         if self.match_TagLine(context, token):
             if self.lookahead_0(context, token):
                 self.end_rule(context, 'DocString')
@@ -1811,6 +1811,12 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:2>Scenario_Definition:1>__alt0:0>Scenario:2>Step:1>Step_Arg:0>__alt1:1>DocString:2>#DocStringSeparator:0
     def match_token_at_31(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'DocString')
+                self.end_rule(context, 'Step')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 15
         if self.match_EOF(context, token):
                 self.end_rule(context, 'DocString')
                 self.end_rule(context, 'Step')
@@ -1819,12 +1825,6 @@ class Parser(object):
                 self.end_rule(context, 'Feature')
                 self.build(context, token)
                 return 27
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'DocString')
-                self.end_rule(context, 'Step')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 15
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'DocString')
                 self.end_rule(context, 'Step')
@@ -1888,6 +1888,12 @@ class Parser(object):
 
     # GherkinDocument:0>Feature:1>Background:2>Step:1>Step_Arg:0>__alt1:1>DocString:2>#DocStringSeparator:0
     def match_token_at_33(self, token, context):
+        if self.match_StepLine(context, token):
+                self.end_rule(context, 'DocString')
+                self.end_rule(context, 'Step')
+                self.start_rule(context, 'Step')
+                self.build(context, token)
+                return 9
         if self.match_EOF(context, token):
                 self.end_rule(context, 'DocString')
                 self.end_rule(context, 'Step')
@@ -1895,12 +1901,6 @@ class Parser(object):
                 self.end_rule(context, 'Feature')
                 self.build(context, token)
                 return 27
-        if self.match_StepLine(context, token):
-                self.end_rule(context, 'DocString')
-                self.end_rule(context, 'Step')
-                self.start_rule(context, 'Step')
-                self.build(context, token)
-                return 9
         if self.match_TagLine(context, token):
                 self.end_rule(context, 'DocString')
                 self.end_rule(context, 'Step')
