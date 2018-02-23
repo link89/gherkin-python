@@ -1,6 +1,8 @@
 import re
 from .dialect import Dialect
 from .errors import NoSuchLanguageException
+from .token import Token
+from .gherkin_line import GherkinLine
 
 
 class TokenMatcher(object):
@@ -158,3 +160,35 @@ class TokenMatcher(object):
 
     def _unescaped_docstring(self, text):
         return text.replace('\\"\\"\\"', '"""') if self._active_doc_string_separator else text
+
+
+class MyTokenMatcher(TokenMatcher):
+
+    def match_StepLine(self, token):
+        keywords = (self.dialect.given_keywords +
+                    self.dialect.when_keywords +
+                    self.dialect.then_keywords +
+                    self.dialect.and_keywords +
+                    self.dialect.but_keywords)
+        is_commented = self.match_Comment(token)
+        _token = self.uncomment_token(token) if is_commented else token
+        for keyword in (k for k in keywords if _token.line.startswith(k)):
+            title = _token.line.get_rest_trimmed(len(keyword))
+            self._set_token_matched(_token, 'StepLine', title, self.comment_keyword(keyword, is_commented))
+            return True
+
+        return False
+
+    @staticmethod
+    def uncomment_token(token):
+        # type: (Token) -> Token
+        gherkin_line = token.line  # type: GherkinLine
+        # only remove first '#'
+        uncomment_gherkin_line = GherkinLine(gherkin_line._line_text.replace('#', '', 1),
+                                             gherkin_line._line_number)
+        return Token(uncomment_gherkin_line, token.location)
+
+    @staticmethod
+    def comment_keyword(keyword, is_commented):
+        return '#' + keyword if is_commented else keyword
+
