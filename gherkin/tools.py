@@ -1,3 +1,5 @@
+from __future__ import print_function, unicode_literals
+
 from .parser import Parser
 from .ast_builder import AstBuilder
 from .token_matcher import MyTokenMatcher
