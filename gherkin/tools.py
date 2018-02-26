@@ -120,7 +120,7 @@ def format_cell(cell):
 
 
 def column_max_len(table):
-    size = lambda x: len(str(x))
+    size = lambda x: len(unicode(x))
     return reduce(lambda x, y: map(lambda a, b: max(a, b), map(size, x), map(size, y)), table, table[0])
 
 
