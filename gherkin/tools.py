@@ -120,7 +120,8 @@ def format_cell(cell):
 
 
 def column_max_len(table):
-    return reduce(lambda x, y: map(lambda a, b: max(a, b), map(len, x), map(len, y)), table, table[0])
+    size = lambda x: len(str(x))
+    return reduce(lambda x, y: map(lambda a, b: max(a, b), map(size, x), map(size, y)), table, table[0])
 
 
 def parse_gherkin(path):
