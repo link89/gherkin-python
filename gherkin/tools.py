@@ -121,7 +121,8 @@ def format_cell(cell):
 
 def column_max_len(table):
     size = lambda x: len(unicode(x))
-    return reduce(lambda x, y: map(lambda a, b: max(a, b), map(size, x), map(size, y)), table, table[0])
+    # x is the accumulated value
+    return reduce(lambda x, y: map(lambda a, b: max(a, b), x, map(size, y)), table, map(size, table[0]))
 
 
 def parse_gherkin(path):
