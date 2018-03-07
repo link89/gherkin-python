@@ -22,6 +22,7 @@ class GherkinWriter(object):
 
     def write_feature(self, f, feature, level=0):
         # type: (BinaryIO, dict, int) -> None
+        self.may_write_comment(f, feature, level)
         tags = feature.get('tags')
         if tags:
             self.write_tags(f, tags, level)
@@ -44,6 +45,7 @@ class GherkinWriter(object):
 
     def write_scenario(self, f, scenario, level):
         # type: (BinaryIO, dict, int) -> None
+        self.may_write_comment(f, scenario, level)
         tags = scenario.get('tags')
         if tags:
             self.write_tags(f, tags, level)
@@ -100,6 +102,11 @@ class GherkinWriter(object):
         for row in table:
             line = build_line(row)
             self.write_line_with_indent(f, line, level)
+
+    def may_write_comment(self, f, ast_object, level):
+        comment = ast_object.get('comment')
+        if comment is not None:
+            self.write_line_with_indent(f, comment, level)
 
     @staticmethod
     def write_line(f, line):
