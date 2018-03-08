@@ -170,25 +170,27 @@ class MyTokenMatcher(TokenMatcher):
                     self.dialect.then_keywords +
                     self.dialect.and_keywords +
                     self.dialect.but_keywords)
-        is_commented = self.match_Comment(token)
-        _token = self.uncomment_token(token) if is_commented else token
+
+        comment_prefix = ''
+        if token.line.startswith('#?'):  # this condition has higher priority
+            comment_prefix = '#?'
+        elif token.line.startswith('#'):
+            comment_prefix = '#'
+
+        _token = self.uncomment_token(token, comment_prefix) if comment_prefix else token
         for keyword in (k for k in keywords if _token.line.startswith(k)):
             title = _token.line.get_rest_trimmed(len(keyword))
-            self._set_token_matched(token, 'StepLine', title, self.comment_keyword(keyword, is_commented))
+            self._set_token_matched(token, 'StepLine', title, comment_prefix + keyword)
             return True
 
         return False
 
     @staticmethod
-    def uncomment_token(token):
+    def uncomment_token(token, comment_prefix):
         # type: (Token) -> Token
         gherkin_line = token.line  # type: GherkinLine
-        # only remove first '#'
-        uncomment_gherkin_line = GherkinLine(gherkin_line._line_text.replace('#', '', 1),
+        # only try to remove first comment_prefix
+        uncomment_gherkin_line = GherkinLine(gherkin_line._line_text.replace(comment_prefix, '', 1),
                                              gherkin_line._line_number)
         return Token(uncomment_gherkin_line, token.location)
-
-    @staticmethod
-    def comment_keyword(keyword, is_commented):
-        return '#' + keyword if is_commented else keyword
 
