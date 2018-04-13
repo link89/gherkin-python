@@ -103,7 +103,7 @@ class GherkinWriter(object):
             return [format_cell(cell['value']) for cell in row['cells']]
         table = []
         if header is not None:
-            table = table.append(format_row(header))
+            table.append(format_row(header))
         table.extend(format_row(row) for row in rows)
         padding = column_max_len(table)
 
