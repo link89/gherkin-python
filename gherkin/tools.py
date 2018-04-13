@@ -6,7 +6,7 @@ from .token_matcher import MyTokenMatcher
 import codecs
 
 
-# TODO: write comments, docstring, data table
+# TODO: write comments, docstring
 class GherkinWriter(object):
     def __init__(self, ast, indent=2):
         self._ast = ast
@@ -69,6 +69,16 @@ class GherkinWriter(object):
         # type: (BinaryIO, dict, int) -> None
         line = "{keyword}{text}".format(**step)
         self.write_line_with_indent(f, line, level)
+        argument = step.get('argument')
+        if argument:
+            self.write_step_argument(f, argument, level)
+
+    def write_step_argument(self, f, argument, level):
+        if 'DataTable' == argument['type']:
+            self.write_step_data_table(f, argument['rows'], level)
+
+    def write_step_data_table(self, f, rows, level):
+        self.write_table(f, None, rows, level)
 
     def write_example(self, f, example, level):
         # type: (BinaryIO, dict, int) -> None
@@ -91,8 +101,9 @@ class GherkinWriter(object):
     def write_table(self, f, header, rows, level):
         def format_row(row):
             return [format_cell(cell['value']) for cell in row['cells']]
-
-        table = [format_row(header)]
+        table = []
+        if header is not None:
+            table = table.append(format_row(header))
         table.extend(format_row(row) for row in rows)
         padding = column_max_len(table)
 
